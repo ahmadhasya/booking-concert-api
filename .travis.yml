@@ -1,0 +1,24 @@
+language: java
+jdk:
+  - openjdk17
+
+services:
+  - postgresql
+
+env:
+  global:
+    - PGPORT=5433
+    - PGUSER=postgres
+    - PGPASSWORD=hasya123
+    - PGDATABASE=bsi
+
+before_install:
+  - sudo sed -i 's/5432/5433/g' /etc/postgresql/*/main/postgresql.conf
+  - sudo service postgresql restart
+
+before_script:
+  - psql -c "CREATE DATABASE bsi;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'hasya123';" -U postgres
+
+script:
+  - mvn clean install

@@ -1,7 +1,9 @@
 package com.ahmad.bsi.service;
 
+import com.ahmad.bsi.model.Booking;
 import com.ahmad.bsi.model.Concert;
 import com.ahmad.bsi.repository.ConcertRepository;
+import com.github.javafaker.Faker;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 @Service
 public class ConcertService {
     private final ConcertRepository repository;
+
+    private final Faker faker = new Faker();
 
     public ConcertService(ConcertRepository repository) {
         this.repository = repository;
@@ -25,6 +29,29 @@ public class ConcertService {
     public Concert findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Concert not found"));
+    }
+
+    public Concert factorySave(){
+        Concert concert = new Concert();
+
+//        id
+//                name
+//        artist
+//                venue
+//        datetime
+//                status
+//        vip_price
+//                vip_capacity
+//        vip_sold
+//                standard_price
+//        standard_capacity
+//                standard_sold
+//        general_admission_price
+//                general_admission_capacity
+//        general_admission_sold
+//        concert.setName(faker);
+
+        return repository.save(concert);
     }
 
     public Concert save(Concert concert) {
