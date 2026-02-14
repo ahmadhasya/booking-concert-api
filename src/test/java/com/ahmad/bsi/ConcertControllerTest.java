@@ -111,6 +111,21 @@ class ConcertControllerTest {
 
     @Test
     void testDetailConcerts() throws Exception {
+        Concert concert = new Concert();
+        concert.setName("Konser Noah 2026");
+        concert.setArtist("Noah");
+        concert.setVenue("Stadion");
+        concert.setDatetime("2026-06-15T20:00:00+07:00");
+        concert.setStatus("upcoming");
+        concert.setVipPrice(900000L);
+        concert.setVipCapacity(30);
+        concert.setStandardPrice(300000L);
+        concert.setStandardCapacity(100);
+        concert.setGeneralAdmissionPrice(0L);
+        concert.setGeneralAdmissionCapacity(0);
+
+        this.concertService.save(concert);
+
         mockMvc.perform(get("/api/v1/concerts/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
