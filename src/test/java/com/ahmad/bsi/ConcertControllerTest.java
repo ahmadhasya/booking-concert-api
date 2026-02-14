@@ -119,10 +119,13 @@ class ConcertControllerTest {
         concert.setStatus("upcoming");
         concert.setVipPrice(900000L);
         concert.setVipCapacity(30);
+        concert.setVipSold(0);
         concert.setStandardPrice(300000L);
         concert.setStandardCapacity(100);
+        concert.setStandardSold(0);
         concert.setGeneralAdmissionPrice(0L);
         concert.setGeneralAdmissionCapacity(0);
+        concert.setGeneralAdmissionSold(0);
 
         this.concertService.save(concert);
 
