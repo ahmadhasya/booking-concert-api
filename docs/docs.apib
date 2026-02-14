@@ -1,0 +1,420 @@
+# Booking Concert API v0.0.1
+
+## User Login [/api/auth/login]
+
+### User Login [GET]
+Get token for user login.
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "admin@gmail.com",
+                "password": "123"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "token": "xxxxx"
+            }
+
+## Concerts [/api/v1/concerts]
+
+### List Concerts [GET]
+List concerts that stored in database. You Can pass the `search` param to filter by `name`, `artist`, and `venue`.
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "name": "Konser Noah 2026",
+                    "artist": "Noah",
+                    "venue": "Lapangan",
+                    "datetime": "2026-06-15T20:00:00+07:00",
+                    "status": "upcoming",
+                    "vipPrice": 900000,
+                    "vipCapacity": 50,
+                    "vipSold": 0,
+                    "standardPrice": 300000,
+                    "standardCapacity": 100,
+                    "standardSold": 5,
+                    "generalAdmissionPrice": 500000,
+                    "generalAdmissionCapacity": 50,
+                    "generalAdmissionSold": 0
+                }
+            ]
+
+### Create Concert [POST]
+Create new concert. Only admin user can do this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
+    + Body
+
+            {
+                "name": "Bersama Ungu 2026",
+                "artist": "Ungu",
+                "venue": "Stadion",
+                "datetime": "2026-10-10T20:00:00+07:00",
+                "status": "upcoming",
+                "vipPrice": 900000,
+                "vipCapacity": 30,
+                "standardPrice": 300000,
+                "standardCapacity": 100,
+                "generalAdmissionPrice": 0,
+                "generalAdmissionCapacity": 0
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "id": 2,
+                "name": "Bersama Ungu 2026",
+                "artist": "Ungu",
+                "venue": "Stadion",
+                "datetime": "2026-10-10T20:00:00+07:00",
+                "status": "upcoming",
+                "vipPrice": 900000,
+                "vipCapacity": 30,
+                "vipSold": 0,
+                "standardPrice": 300000,
+                "standardCapacity": 100,
+                "standardSold": 0,
+                "generalAdmissionPrice": 0,
+                "generalAdmissionCapacity": 0,
+                "generalAdmissionSold": 0
+            }
+
+## Detail Concert [/api/v1/concerts/{id}]
+
+### Get Detail Concert [GET]
+Detail concert by concert id.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 1,
+                "name": "Konser Noah 2026",
+                "artist": "Noah",
+                "venue": "Lapangan",
+                "datetime": "2026-06-15T20:00:00+07:00",
+                "status": "upcoming",
+                "vipPrice": 900000,
+                "vipCapacity": 50,
+                "vipSold": 0,
+                "standardPrice": 300000,
+                "standardCapacity": 100,
+                "standardSold": 5,
+                "generalAdmissionPrice": 500000,
+                "generalAdmissionCapacity": 50,
+                "generalAdmissionSold": 0
+            }
+
+### Update Detail Concert [PUT]
+Update concert that already stored in database. Only admin can do this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
+    + Body
+
+            {
+                "name": "Bersama Ungu 2026",
+                "artist": "Ungu",
+                "venue": "Stadion",
+                "datetime": "2026-10-10T20:00:00+07:00",
+                "status": "upcoming",
+                "vipPrice": 900000,
+                "vipCapacity": 30,
+                "standardPrice": 300000,
+                "standardCapacity": 100,
+                "generalAdmissionPrice": 0,
+                "generalAdmissionCapacity": 0
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 2,
+                "name": "Bersama Ungu 2026",
+                "artist": "Ungu",
+                "venue": "Stadion",
+                "datetime": "2026-10-10T20:00:00+07:00",
+                "status": "upcoming",
+                "vipPrice": 900000,
+                "vipCapacity": 30,
+                "vipSold": 0,
+                "standardPrice": 300000,
+                "standardCapacity": 100,
+                "standardSold": 0,
+                "generalAdmissionPrice": 0,
+                "generalAdmissionCapacity": 0,
+                "generalAdmissionSold": 0
+            }
+
+## Concert Pricing [/api/v1/concerts/{id}/pricing]
+
+### Concert Pricing [GET]
+Get ticket pricing by id for standard ticket, vip ticket, and general admission ticket.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "standard": 337500.0,
+                "generalAdmission": 500000.0,
+                "vip": 900000.0
+            }
+
+## Concert Availability [/api/v1/concerts/{id}/availability]
+
+### Concert Availability [GET]
+Get ticket availability by id for standard ticket, vip ticket, and general admission ticket.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "standard": 95,
+                "generalAdmission": 50,
+                "vip": 50
+            }
+
+## Booking Ticket [/api/v1/booking]
+
+### List Booking [GET]
+Get list booked ticket. Only user can access this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                    "name": "Konser Noah 2026",
+                    "artist": "Noah",
+                    "venue": "Lapangan",
+                    "datetime": "2026-06-15T20:00:00+07:00",
+                    "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                    "category": "standard",
+                    "status": "booked",
+                    "basePrice": 300000,
+                    "amount": 5,
+                    "price": 300000,
+                    "totalPrice": 1500000,
+                    "userId": 1,
+                    "concertId": 1
+                }
+            ]
+
+### Create Booking [POST]
+Book concert ticket. Only user can access this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
+    + Body
+
+            {
+                "concertId": 1,
+                "category": "standard",
+                "amount": 5
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                    "name": "Konser Noah 2026",
+                    "artist": "Noah",
+                    "venue": "Lapangan",
+                    "datetime": "2026-06-15T20:00:00+07:00",
+                    "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                    "category": "standard",
+                    "status": "booked",
+                    "basePrice": 300000,
+                    "amount": 5,
+                    "price": 300000,
+                    "totalPrice": 1500000,
+                    "userId": 1,
+                    "concertId": 1
+                }
+            ]
+
+## Detail Booking Ticket [/api/v1/booking/{id}]
+
+### Detail Booking Ticket [GET]
+Get detail booked ticket by id. Only user can access this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 1,
+                "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                "name": "Konser Noah 2026",
+                "artist": "Noah",
+                "venue": "Lapangan",
+                "datetime": "2026-06-15T20:00:00+07:00",
+                "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                "category": "standard",
+                "status": "booked",
+                "basePrice": 300000,
+                "amount": 5,
+                "price": 300000,
+                "totalPrice": 1500000,
+                "userId": 1,
+                "concertId": 1
+            }
+
+## Cancel Booking Ticket [/api/v1/booking/{id}/cancel]
+
+### Cancel Booking Ticket [POST]
+Cancel booked ticket by id. Only user can access this.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer xxxx
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 1,
+                "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                "name": "Konser Noah 2026",
+                "artist": "Noah",
+                "venue": "Lapangan",
+                "datetime": "2026-06-15T20:00:00+07:00",
+                "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                "category": "standard",
+                "status": "cancelled",
+                "basePrice": 300000,
+                "amount": 5,
+                "price": 300000,
+                "totalPrice": 1500000,
+                "userId": 1,
+                "concertId": 1
+            }
+
+## Settlement Report [/api/v1/concerts/{id}/settlement]
+
+### Settlement Report [GET]
+Get Settlement Report.
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                    "name": "Konser Noah 2026",
+                    "artist": "Noah",
+                    "venue": "Lapangan",
+                    "datetime": "2026-06-15T20:00:00+07:00",
+                    "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                    "category": "standard",
+                    "status": "booked",
+                    "basePrice": 300000,
+                    "amount": 5,
+                    "price": 300000,
+                    "totalPrice": 1500000,
+                    "userId": 1,
+                    "concertId": 1
+                }
+            ]
+
+## Transactions Report [/api/v1/transactions]
+
+### Transactions Report [GET]
+Get Transactions Report.
+
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "code": "a8e476f8-6412-46b6-86d6-8ab0c66be1ac",
+                    "name": "Konser Noah 2026",
+                    "artist": "Noah",
+                    "venue": "Lapangan",
+                    "datetime": "2026-06-15T20:00:00+07:00",
+                    "ordertime": "2026-02-13T15:56:15.764569+07:00",
+                    "category": "standard",
+                    "status": "booked",
+                    "basePrice": 300000,
+                    "amount": 5,
+                    "price": 300000,
+                    "totalPrice": 1500000,
+                    "userId": 1,
+                    "concertId": 1
+                }
+            ]
+
+## Dashboard Report [/api/v1/analytics/dashboard]
+
+### Dashboard Report [GET]
+Get Dashboard Report.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "generalAdmissionTicketsSold": 0,
+                "standardTicketsSold": 5,
+                "totalBookings": 1,
+                "totalRevenue": 300000,
+                "vipTicketsSold": 0
+            }
